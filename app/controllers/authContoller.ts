@@ -26,9 +26,12 @@ export async function Signup(c: Context) {
       },
     });
 
-    const token = await sign({ id: userr.id }, c.env.JWT_SECRET_KEY);
+    const token = await sign(
+      { id: userr.id, role: userr.role },
+      c.env.JWT_SECRET_KEY
+    );
 
-    return c.json({ token });
+    return c.json({ userr });
   } catch (e) {
     c.status(500);
     return c.json({ msg: "Internal server error" });
@@ -42,7 +45,7 @@ export async function Login(c: Context) {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 
-  const validate = SignupSchema.safeParse(body);
+  const validate = LoginSchema.safeParse(body);
   if (!validate.success) {
     c.status(400);
     return c.json({ msg: "Incorrect inputs" });
@@ -59,7 +62,10 @@ export async function Login(c: Context) {
       return c.json({ msg: "User does not exist" });
     }
 
-    const token = await sign({ id: userExists.id }, c.env.JWT_SECRET_KEY);
+    const token = await sign(
+      { id: userExists.id, role: userExists.role },
+      c.env.JWT_SECRET_KEY
+    );
 
     return c.json({ token });
   } catch (e) {
