@@ -28,13 +28,23 @@ export async function Interview(c: Context) {
     const aiQuestions = await prisma.question.createMany({
       data: interviewQuestions.map((q: any) => ({
         interviewId: intervieww.id,
-        text: q.question,
+        question: q.question,
+        answer: q.answer,
         techstack: techStack,
         source: "AI",
       })),
     });
 
-    return c.json({ aiQuestions });
+    const actualResponse = await prisma.question.findMany({
+      select: {
+        techstack: true,
+        question: true,
+        answer: true,
+        source: true,
+      },
+    });
+
+    return c.json({ actualResponse });
   } catch (e: any) {
     return c.json({ msg: e.message });
   }
