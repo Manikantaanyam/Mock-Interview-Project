@@ -36,6 +36,11 @@ export async function Interview(c: Context) {
     });
 
     const actualResponse = await prisma.question.findMany({
+      where: {
+        techstack: {
+          contains: techStack,
+        },
+      },
       select: {
         techstack: true,
         question: true,
