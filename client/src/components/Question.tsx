@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import { dataAtom } from "../store/atoms/dataAtom";
 import LiveFeed from "./Livefeed";
 import AccordionItem from "./Accordian";
+import SpeechToText from "./Speech";
 function Question() {
   const data = useRecoilValue(dataAtom);
   const [currentPage, setCurrentPage] = useState(1);
@@ -85,6 +86,7 @@ function Question() {
       </div>
       <div>
         <LiveFeed />
+        <SpeechToText />
       </div>
     </div>
   );
