@@ -1,43 +1,33 @@
-import { useState, useRef, useEffect } from "react";
+// LiveFeed.js
+import React, { useEffect, useRef, useState } from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
 
-const Camera = () => {
-  const [hasPermission, setHasPermission] = useState(false);
-  const [permissionDenied, setPermissionDenied] = useState(false);
-  const [previewStream, setPreviewStream] = useState(null);
+const LiveFeed = () => {
   const videoRef = useRef(null);
+  const [previewStream, setPreviewStream] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
 
-  // Request permission for webcam and microphone
-  const requestPermission = async () => {
-    try {
+  useEffect(() => {
+    const startStream = async () => {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true,
       });
-      setHasPermission(true); // Permission granted
-      setPreviewStream(stream); // Store the stream
-    } catch (error) {
-      console.error("Permission denied:", error);
-      setPermissionDenied(true); // Permission denied
-    }
-  };
+      setPreviewStream(stream);
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    };
 
-  // Set up video stream when permission is granted
-  useEffect(() => {
-    if (videoRef.current && previewStream) {
-      videoRef.current.srcObject = previewStream; // Assign stream to video element for live preview
-    }
+    startStream();
 
     return () => {
-      // Stop all tracks when the component is unmounted
       if (previewStream) {
         previewStream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, [previewStream]);
+  }, []);
 
-  // Handle recording start and stop
   const handleStartRecording = (startRecording) => {
     startRecording();
     setIsRecording(true);
@@ -48,18 +38,7 @@ const Camera = () => {
     setIsRecording(false);
   };
 
-  // Step 1: Permission Page
-  if (!hasPermission && !permissionDenied) {
-    return (
-      <div>
-        <h2>We need access to your camera and microphone</h2>
-        <button onClick={requestPermission}>Allow Access</button>
-      </div>
-    );
-  }
-
-  // Step 2: Live Preview and Recording Component
-  return hasPermission ? (
+  return (
     <div>
       <video
         ref={videoRef}
@@ -86,7 +65,6 @@ const Camera = () => {
               Stop Recording
             </button>
 
-            {/* Recorded Video */}
             {mediaBlobUrl && (
               <div>
                 <h3>Recorded Video:</h3>
@@ -106,12 +84,7 @@ const Camera = () => {
         )}
       />
     </div>
-  ) : (
-    <div>
-      <h2>Permission denied</h2>
-      <p>You have denied access to the camera and microphone.</p>
-    </div>
   );
 };
 
-export default Camera;
+export default LiveFeed;
