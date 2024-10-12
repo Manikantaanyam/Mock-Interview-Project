@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { dataAtom } from "../store/atoms/dataAtom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { dataAtom } from "../store/atoms/dataAtom";
 
 function From() {
   const navigate = useNavigate();

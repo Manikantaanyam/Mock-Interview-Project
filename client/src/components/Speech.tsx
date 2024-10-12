@@ -28,15 +28,21 @@ const SpeechToText = () => {
       <button onClick={isRecording ? stopSpeechToText : startSpeechToText}>
         {isRecording ? "Stop Recording" : "Start Recording"}
       </button>
+      <button
+        onClick={() => {
+          console.log(userAnswer);
+        }}
+      >
+        end
+      </button>
 
       {error && <p style={{ color: "red" }}>Error: {error.message}</p>}
 
-      <ul>
-        {results.map((result) => (
-          <li key={result.timestamp}>{result.transcript}</li>
-        ))}
+      {/* <ul>
+        {userAnswer}
         {interimResult && <li>{interimResult}</li>}
-      </ul>
+      </ul> */}
+      <p>{userAnswer}</p>
     </div>
   );
 };

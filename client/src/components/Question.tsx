@@ -2,10 +2,10 @@ import axios from "axios";
 import { useState } from "react";
 import Camera from "./Cam";
 import { useRecoilValue } from "recoil";
-import { dataAtom } from "../store/atoms/dataAtom";
 import LiveFeed from "./Livefeed";
 import AccordionItem from "./Accordian";
 import SpeechToText from "./Speech";
+import { dataAtom } from "../store/atoms/dataAtom";
 function Question() {
   const data = useRecoilValue(dataAtom);
   const [currentPage, setCurrentPage] = useState(1);
