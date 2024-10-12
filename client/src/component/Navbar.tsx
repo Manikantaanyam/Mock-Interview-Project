@@ -38,7 +38,7 @@ export const Navbar = () => {
 
         {/* Menu Links */}
         <div className="hidden md:flex space-x-6">
-          <Link to="/about">
+          <Link to="/dashboard">
             <a className="text-gray-600 hover:text-black">Home</a>
           </Link>
           <Link to="/about">

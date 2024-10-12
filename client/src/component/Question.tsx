@@ -20,11 +20,11 @@ function Question() {
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="grid grid-cols-2 gap-5 h-screen items-center">
+    <div className=" ">
       <div>
-        <div>
-          <h1>Items</h1>
-          <div>
+        <div className="w-[600px] border shadow-md  p-4 h-[450px]">
+          <h1 className="font-bold text-2xl pb-10">Questions</h1>
+          <div className="h-[200px]">
             {currentItems.map((item, index) => (
               <div key={index}>
                 <h1>{item.techStack}</h1>
@@ -51,22 +51,35 @@ function Question() {
                   }
                   id={index}
                 />
-                {/* <h2>{item.techstack}</h2>
-                <p>{item.question}</p>
-                <p>{item.answer}</p>
-                <p>{item.source}</p> */}
               </div>
             ))}
           </div>
 
           {/* Pagination Controls */}
-          <div>
+          <div className="w-full p-2 mt-16 flex items-center justify-between">
             <button
               className="border p-2 border-black"
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
             >
-              Previous question
+              <div className="flex gap-3 items-center">
+                {" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
+                <p>prev</p>
+              </div>
             </button>
 
             <span>
@@ -79,14 +92,26 @@ function Question() {
               onClick={() => setCurrentPage(currentPage + 1)}
               disabled={currentPage === totalPages}
             >
-              Next question
+              <div className="flex gap-3 items-center">
+                <p>Next</p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                  />
+                </svg>
+              </div>
             </button>
           </div>
         </div>
-      </div>
-      <div>
-        <LiveFeed />
-        <SpeechToText />
       </div>
     </div>
   );
