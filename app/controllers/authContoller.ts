@@ -31,7 +31,7 @@ export async function Signup(c: Context) {
       c.env.JWT_SECRET_KEY
     );
 
-    return c.json({ userr });
+    return c.json({ token });
   } catch (e) {
     c.status(500);
     return c.json({ msg: "Internal server error" });
