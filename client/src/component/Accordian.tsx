@@ -1,7 +1,15 @@
 // AccordionItem.js
-import React, { useState } from "react";
+import { useState } from "react";
 
-const AccordionItem = ({ title, content, id }) => {
+const AccordionItem = ({
+  title,
+  content,
+  id,
+}: {
+  title: string;
+  content: string;
+  id: string;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -51,7 +59,9 @@ const AccordionItem = ({ title, content, id }) => {
       {!isOpen ? (
         <div className="flex h-screen flex-col items-center">
           <div className="flex  items-center">
-            <h1 className="mt-20">Don't look at the answer</h1>
+            <h1 className="mt-20 bg-black p-2 text-white rounded-full px-5">
+              Don't look at the answer
+            </h1>
           </div>
         </div>
       ) : null}

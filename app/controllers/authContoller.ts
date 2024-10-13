@@ -3,6 +3,7 @@ import { LoginSchema, SignupSchema } from "../validationSchemas/AuthSchemas";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { sign } from "hono/jwt";
+import { use } from "hono/jsx";
 
 export async function Signup(c: Context) {
   const body = await c.req.json();
@@ -31,7 +32,7 @@ export async function Signup(c: Context) {
       c.env.JWT_SECRET_KEY
     );
 
-    return c.json({ token });
+    return c.json({ token, name: userr.name });
   } catch (e) {
     c.status(500);
     return c.json({ msg: "Internal server error" });
@@ -67,7 +68,7 @@ export async function Login(c: Context) {
       c.env.JWT_SECRET_KEY
     );
 
-    return c.json({ token });
+    return c.json({ token, name: userExists.name });
   } catch (e) {
     c.status(500);
     return c.json({ msg: "Internal server error" });

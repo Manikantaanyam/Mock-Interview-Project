@@ -1,11 +1,11 @@
 // LiveFeed.js
 import { Button } from "@/components/ui/button";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
 
 const LiveFeed = () => {
-  const videoRef = useRef(null);
-  const [previewStream, setPreviewStream] = useState(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [previewStream, setPreviewStream] = useState<MediaStream | null>(null);
   const [isRecording, setIsRecording] = useState(false);
 
   useEffect(() => {
@@ -29,12 +29,12 @@ const LiveFeed = () => {
     };
   }, []);
 
-  const handleStartRecording = (startRecording) => {
+  const handleStartRecording = (startRecording: () => void) => {
     startRecording();
     setIsRecording(true);
   };
 
-  const handleStopRecording = (stopRecording) => {
+  const handleStopRecording = (stopRecording: () => void) => {
     stopRecording();
     setIsRecording(false);
   };
@@ -45,14 +45,19 @@ const LiveFeed = () => {
         ref={videoRef}
         autoPlay
         muted
-        style={{ width: "400px", height: "300px", border: "1px solid black" }}
+        style={{
+          width: "400px",
+          height: "300px",
+          border: "1px solid black",
+          transform: "scaleX(-1)",
+        }}
       />
       <ReactMediaRecorder
         video
         audio
         render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
           <div>
-            <p className="text-lg font-medium my-2">{status}</p>
+            <p className="text-base font-medium my-2">{status}</p>
             <div className="w-full flex justify-between">
               <Button
                 onClick={() => handleStartRecording(startRecording)}
@@ -72,21 +77,6 @@ const LiveFeed = () => {
                 <Button className="w-full mt-4">Download Video</Button>
               </a>
             </div>
-            {/* {mediaBlobUrl && (
-              <div>
-                <h3>Recorded Video:</h3>
-                <video
-                  src={mediaBlobUrl}
-                  controls
-                  autoPlay
-                  loop
-                  style={{ width: "300px" }}
-                />
-                <a href={mediaBlobUrl} download="recorded-video.mp4">
-                  <button>Download Video</button>
-                </a>
-              </div>
-            )} */}
           </div>
         )}
       />

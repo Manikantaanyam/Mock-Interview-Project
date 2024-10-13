@@ -1,5 +1,4 @@
 import From from "@/component/From";
-import { Navbar } from "@/component/Navbar";
 import { useState } from "react";
 const Dashboard = () => {
   const [isJobFrom, setIsJobForm] = useState(false);

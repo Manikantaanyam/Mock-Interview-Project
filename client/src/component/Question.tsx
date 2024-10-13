@@ -1,11 +1,9 @@
-import axios from "axios";
 import { useState } from "react";
-import Camera from "./Cam";
 import { useRecoilValue } from "recoil";
-import LiveFeed from "./Livefeed";
 import AccordionItem from "./Accordian";
-import SpeechToText from "./Speech";
 import { dataAtom } from "../store/atoms/dataAtom";
+import { Button } from "@/components/ui/button";
+
 function Question() {
   const data = useRecoilValue(dataAtom);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,34 +20,17 @@ function Question() {
   return (
     <div className=" ">
       <div>
-        <div className="w-[600px] border shadow-md  p-4 h-[450px]">
-          <h1 className="font-bold text-2xl pb-10">Questions</h1>
+        <div className="w-[600px]  border shadow-md  p-4 h-[450px]">
+          <h1 className="font-bold   text-2xl pb-10">Questions</h1>
           <div className="h-[200px]">
-            {currentItems.map((item, index) => (
-              <div key={index}>
+            {currentItems.map((item) => (
+              <div key={item.id}>
                 <h1>{item.techStack}</h1>
 
                 <AccordionItem
                   title={item.question}
-                  content={
-                    <>
-                      <p className="mb-2 text-gray-500 dark:text-gray-400">
-                        {item.answer}
-                      </p>
-                      <p className="text-gray-500 dark:text-gray-400">
-                        Check out this guide to learn how to{" "}
-                        <a
-                          href="/docs/getting-started/introduction/"
-                          className="text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          get started
-                        </a>{" "}
-                        and start developing websites even faster with
-                        components on top of Tailwind CSS.
-                      </p>
-                    </>
-                  }
-                  id={index}
+                  content={item.answer}
+                  id={item.id}
                 />
               </div>
             ))}
@@ -57,7 +38,7 @@ function Question() {
 
           {/* Pagination Controls */}
           <div className="w-full p-2 mt-16 flex items-center justify-between">
-            <button
+            <Button
               className="border p-2 border-black"
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
@@ -80,14 +61,14 @@ function Question() {
                 </svg>
                 <p>prev</p>
               </div>
-            </button>
+            </Button>
 
             <span>
               {" "}
               question {currentPage} of {totalPages}{" "}
             </span>
 
-            <button
+            <Button
               className="border p-2 border-black"
               onClick={() => setCurrentPage(currentPage + 1)}
               disabled={currentPage === totalPages}
@@ -109,7 +90,7 @@ function Question() {
                   />
                 </svg>
               </div>
-            </button>
+            </Button>
           </div>
         </div>
       </div>

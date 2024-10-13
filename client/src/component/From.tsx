@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,22 +16,23 @@ function From() {
   const [loader, setLoader] = useState(false);
   const setData = useSetRecoilState(dataAtom);
 
-  const hanldeData = async (e) => {
+  const hanldeData = async (e: FormEvent<HTMLFormElement>) => {
     setLoader(true);
-    const token = getItem("token");
+    const token: string | null = getItem("token");
+    const realToken = JSON.parse(token);
     e.preventDefault();
     const reponse = await axios.post(
       "http://127.0.0.1:8787/api/user/start",
       { jobRole, techStack: techstack, YOE },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${realToken.token}`,
         },
       }
     );
     setData(reponse.data.actualResponse);
     setLoader(false);
-    navigate("/permission");
+    navigate("/home/permission");
   };
   return (
     <div className="grid grid-cols-2 h-full mt-10 ">

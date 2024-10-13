@@ -2,14 +2,14 @@ import { useState, useRef, useEffect } from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
 
 const Camera = () => {
-  const [hasPermission, setHasPermission] = useState(false);
-  const [permissionDenied, setPermissionDenied] = useState(false);
-  const [previewStream, setPreviewStream] = useState(null);
-  const videoRef = useRef(null);
-  const [isRecording, setIsRecording] = useState(false);
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
+  const [permissionDenied, setPermissionDenied] = useState<boolean>(false);
+  const [previewStream, setPreviewStream] = useState<MediaStream | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isRecording, setIsRecording] = useState<boolean>(false);
 
   // Request permission for webcam and microphone
-  const requestPermission = async () => {
+  const requestPermission = async (): Promise<void> => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
@@ -38,12 +38,12 @@ const Camera = () => {
   }, [previewStream]);
 
   // Handle recording start and stop
-  const handleStartRecording = (startRecording) => {
+  const handleStartRecording = (startRecording: () => void) => {
     startRecording();
     setIsRecording(true);
   };
 
-  const handleStopRecording = (stopRecording) => {
+  const handleStopRecording = (stopRecording: () => void) => {
     stopRecording();
     setIsRecording(false);
   };

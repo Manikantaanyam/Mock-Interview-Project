@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { setItem } from "@/session";
 import axios from "axios";
+import { log } from "console";
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -31,9 +32,11 @@ export function LoginForm({ type }: { type: string }) {
         password,
       }
     );
+    console.log(response.data);
+    const realData = JSON.stringify(response.data);
 
-    setItem("token", response.data.token);
-    navigate("/dashboard");
+    setItem("token", realData);
+    navigate("/home/dashboard");
   };
 
   return (

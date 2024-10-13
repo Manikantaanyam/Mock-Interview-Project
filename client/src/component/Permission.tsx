@@ -1,21 +1,19 @@
 // PermissionRequest.js
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PermissionRequest = () => {
-  const [hasPermission, setHasPermission] = useState(false);
   const [permissionDenied, setPermissionDenied] = useState(false);
   const navigate = useNavigate();
 
   const requestPermission = async () => {
     try {
       await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      setHasPermission(true); // Permission granted
-      navigate("/cam"); // Navigate to live feed
+      navigate("/cam");
     } catch (error) {
       console.error("Permission denied:", error);
-      setPermissionDenied(true); // Permission denied
+      setPermissionDenied(true);
     }
   };
 
