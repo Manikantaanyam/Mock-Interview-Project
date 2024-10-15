@@ -10,7 +10,7 @@ const PermissionRequest = () => {
   const requestPermission = async () => {
     try {
       await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      navigate("/cam");
+      navigate("/home/cam");
     } catch (error) {
       console.error("Permission denied:", error);
       setPermissionDenied(true);

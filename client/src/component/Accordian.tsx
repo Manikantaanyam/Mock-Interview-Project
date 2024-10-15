@@ -16,6 +16,15 @@ const AccordionItem = ({
     setIsOpen(!isOpen);
   };
 
+  const textToSpeech = (title) => {
+    if ("speechSynthesis" in window) {
+      const speech = new SpeechSynthesisUtterance(title);
+      window.speechSynthesis.speak(speech);
+    } else {
+      alert("Hello");
+    }
+  };
+
   return (
     <div>
       <h2 id={`accordion-collapse-heading-${id}`}>
@@ -26,6 +35,22 @@ const AccordionItem = ({
           aria-expanded={isOpen}
           aria-controls={`accordion-collapse-body-${id}`}
         >
+          <button onClick={textToSpeech(title)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z"
+              />
+            </svg>
+          </button>
           <span className="text-black font-medium">{title}</span>
           <svg
             data-accordion-icon

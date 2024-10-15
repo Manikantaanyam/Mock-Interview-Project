@@ -14,8 +14,8 @@ export const Navbar = () => {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    const name = getItem("token");
-    const realName = JSON.parse(name);
+    const parsename = getItem("token");
+    const realName = JSON.parse(parsename);
     setName(realName.name);
   }, []);
 
@@ -62,7 +62,7 @@ export const Navbar = () => {
           </div>
 
           <Button className="rounded-full font-semibold h-10 w-10">
-            {name[0].toUpperCase()}
+            {name ? name[0].toUpperCase() : "A"}
           </Button>
 
           {/* Dropdown on small screens */}

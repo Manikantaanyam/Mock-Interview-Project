@@ -54,3 +54,19 @@ export async function Interview(c: Context) {
     return c.json({ msg: e.message });
   }
 }
+
+export async function endInterview(c: Context) {
+  const body = await c.req.json();
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const question = `${body} based on this questions and answers give me the rating out of 10 at the last give me your feedback and tips to improve my performance`;
+
+  try {
+    const chatSession = createChatSession(c);
+    const response = await sendMessageToGemini(chatSession, question);
+    const jsonString = response.replace(/```json\n|\n```/g, "");
+    const interviewQuestions = JSON.parse(jsonString);
+  } catch (e) {}
+}

@@ -40,7 +40,9 @@ function Question() {
           <div className="w-full p-2 mt-16 flex items-center justify-between">
             <Button
               className="border p-2 border-black"
-              onClick={() => setCurrentPage(currentPage - 1)}
+              onClick={() => {
+                setCurrentPage(currentPage - 1);
+              }}
               disabled={currentPage === 1}
             >
               <div className="flex gap-3 items-center">
@@ -70,7 +72,9 @@ function Question() {
 
             <Button
               className="border p-2 border-black"
-              onClick={() => setCurrentPage(currentPage + 1)}
+              onClick={() => {
+                setCurrentPage(currentPage + 1);
+              }}
               disabled={currentPage === totalPages}
             >
               <div className="flex gap-3 items-center">

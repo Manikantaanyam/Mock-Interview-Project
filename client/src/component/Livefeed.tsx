@@ -2,12 +2,25 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
+import useSpeechToText from "react-hook-speech-to-text";
 
 const LiveFeed = () => {
+  const { results, startSpeechToText, stopSpeechToText } = useSpeechToText({
+    continuous: true,
+    useLegacyResults: false,
+  });
+
+  const [userAnswer, setUseranswer] = useState(results);
+
+  useEffect(() => {
+    results.map((result) => {
+      setUseranswer((prevAns) => prevAns + result?.transcript);
+    });
+  }, [results]);
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const [previewStream, setPreviewStream] = useState<MediaStream | null>(null);
   const [isRecording, setIsRecording] = useState(false);
-
   useEffect(() => {
     const startStream = async () => {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -32,11 +45,14 @@ const LiveFeed = () => {
   const handleStartRecording = (startRecording: () => void) => {
     startRecording();
     setIsRecording(true);
+    startSpeechToText();
   };
 
   const handleStopRecording = (stopRecording: () => void) => {
     stopRecording();
     setIsRecording(false);
+    stopSpeechToText();
+    console.log(userAnswer);
   };
 
   return (
@@ -71,6 +87,7 @@ const LiveFeed = () => {
               >
                 Stop Recording
               </Button>
+              <Button>End Interview</Button>
             </div>
             <div>
               <a href={mediaBlobUrl} download="recorded-video.mp4">
